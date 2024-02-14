@@ -17,6 +17,7 @@
             chunk_num+=1
             total_chunks = chunk["total_chunks"]
             sc+=b64decode(chunk["chunk_data"])
+            print(str(chunk_num) + "/" + str(total_chunks))
 
         print(sc[:300])
         print(md5(sc).hexdigest())
